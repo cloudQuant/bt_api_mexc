@@ -1,0 +1,15 @@
+"""Tests for MexcExchangeData container."""
+
+from __future__ import annotations
+
+from bt_api_mexc.exchange_data import MexcExchangeData
+
+
+class TestMexcExchangeData:
+    """Tests for MexcExchangeData."""
+
+    def test_init(self):
+        """Test initialization."""
+        exchange = MexcExchangeData()
+
+        assert exchange.exchange_name == "mexc"

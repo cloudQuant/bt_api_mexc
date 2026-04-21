@@ -1,0 +1,13 @@
+"""Tests for ErrorFrameworkMexc."""
+
+from __future__ import annotations
+
+from bt_api_mexc.errors.mexc_translator import MexcErrorTranslator
+
+
+class TestMexcErrorTranslator:
+    """Tests for MexcErrorTranslator."""
+
+    def test_error_map_exists(self):
+        """Test ERROR_MAP is defined."""
+        assert hasattr(MexcErrorTranslator, "ERROR_MAP")
