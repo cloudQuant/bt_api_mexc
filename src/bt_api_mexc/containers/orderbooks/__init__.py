@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from bt_api_mexc.containers.orderbooks.mexc_orderbook import (
     MexcOrderBookData,
-    MexcWssOrderBookData,
     MexcRequestOrderBookData,
+    MexcWssOrderBookData,
 )
 
 __all__ = [
