@@ -62,11 +62,14 @@ try:
 except ImportError:
 
     class MexcErrorTranslator:
+        """Class MexcErrorTranslator"""
         def translate(self, code, msg):
+            """translate method"""
             return code, msg
 
 
 class MexcRequestData(Feed):
+    """Class MexcRequestData"""
     @classmethod
     def _capabilities(cls) -> set:
         return {
@@ -85,6 +88,7 @@ class MexcRequestData(Feed):
         }
 
     def __init__(self, data_queue: Any = None, **kwargs: Any) -> None:
+        """__init__ method"""
         super().__init__(data_queue, **kwargs)
         self.data_queue = data_queue
         self.public_key = kwargs.get("public_key") or kwargs.get("api_key")
@@ -101,10 +105,12 @@ class MexcRequestData(Feed):
         self._http_client = HttpClient(venue=self.exchange_name, timeout=30)
 
     def push_data_to_queue(self, data) -> None:
+        """push_data_to_queue method"""
         if self.data_queue is not None:
             self.data_queue.put(data)
 
     def sign(self, content: str) -> str:
+        """sign method"""
         if self.private_key is None:
             raise ValueError("private_key is required for signing")
         signature = hmac.new(
@@ -113,6 +119,7 @@ class MexcRequestData(Feed):
         return signature.lower()
 
     def request(self, path, params=None, body=None, extra_data=None, timeout=10, is_sign=True):
+        """request method"""
         if params is None:
             params = {}
         if extra_data is None:
@@ -146,6 +153,7 @@ class MexcRequestData(Feed):
     async def async_request(
         self, path, params=None, body=None, extra_data=None, timeout=10, is_sign=True
     ):
+        """async_request method"""
         if params is None:
             params = {}
         if extra_data is None:
@@ -183,6 +191,7 @@ class MexcRequestData(Feed):
         return RequestData(response, extra_data)
 
     def async_callback(self, future):
+        """async_callback method"""
         try:
             result = future.result()
             self.push_data_to_queue(result)
@@ -267,8 +276,7 @@ class MexcRequestData(Feed):
                     "local_update_time": time.time(),
                 }
             ], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_recent_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_type = "get_recent_trades"
@@ -413,8 +421,7 @@ class MexcRequestData(Feed):
                     }
                 )
             return [{"tickers": tickers}], status
-        else:
-            return [], status
+        else: return [], status
 
     def _make_order(
         self,
@@ -466,8 +473,7 @@ class MexcRequestData(Feed):
                     "cummulative_quote_qty": input_data.get("cummulativeQuoteQty", "0"),
                 }
             ], status
-        else:
-            return [], status
+        else: return [], status
 
     def _cancel_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_type = "cancel_order"
@@ -502,8 +508,7 @@ class MexcRequestData(Feed):
                     "transact_time": input_data.get("transactTime"),
                 }
             ], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_type = "get_order"
@@ -550,8 +555,7 @@ class MexcRequestData(Feed):
                     "exchange": input_data.get("exchange"),
                 }
             ], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_open_orders(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_open_orders"
@@ -684,8 +688,7 @@ class MexcRequestData(Feed):
                     "account_type": input_data.get("accountType"),
                 }
             ], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_my_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_type = "get_my_trades"

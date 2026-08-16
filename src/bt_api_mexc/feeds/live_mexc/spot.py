@@ -61,7 +61,9 @@ except ImportError:
 
 
 class MexcRequestDataSpot(MexcRequestData):
+    """Class MexcRequestDataSpot"""
     def __init__(self, data_queue: Any = None, **kwargs: Any) -> None:
+        """__init__ method"""
         super().__init__(data_queue, **kwargs)
         self.asset_type = kwargs.get("asset_type", "SPOT")
         self.logger_name = kwargs.get("logger_name", "mexc_spot_feed.log")
@@ -162,8 +164,7 @@ class MexcRequestDataSpot(MexcRequestData):
         if status:
             ticker = MexcRequestTickerData(input_data, symbol_name, asset_type)
             return [ticker], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_order_book(self, symbol, limit=100, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -192,8 +193,7 @@ class MexcRequestDataSpot(MexcRequestData):
         if status:
             orderbook = MexcRequestOrderBookData(input_data, symbol_name, asset_type)
             return [orderbook], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_recent_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -222,8 +222,7 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             trades = [MexcRequestTradeData(trade, symbol_name, asset_type) for trade in input_data]
             return [trades], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_klines(self, symbol, interval="1h", limit=100, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -272,8 +271,7 @@ class MexcRequestDataSpot(MexcRequestData):
                     }
                     bars.append(bar)
             return [bars], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_server_time(self, extra_data=None, **kwargs):
         request_type = "get_server_time"
@@ -297,8 +295,7 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [{"server_time": input_data.get("serverTime")}], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_exchange_info(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_exchange_info"
@@ -326,8 +323,7 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [{"exchange_info": input_data}], status
-        else:
-            return [], status
+        else: return [], status
 
     def _cancel_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -360,8 +356,7 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [MexcRequestOrderData(input_data, symbol_name, asset_type)], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -394,8 +389,7 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [MexcRequestOrderData(input_data, symbol_name, asset_type)], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_open_orders(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_open_orders"
@@ -426,8 +420,7 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             orders = [MexcRequestOrderData(order, symbol_name, asset_type) for order in input_data]
             return [orders], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_all_orders(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -456,8 +449,7 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             orders = [MexcRequestOrderData(order, symbol_name, asset_type) for order in input_data]
             return [orders], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_account(self, extra_data=None, **kwargs):
         request_type = "get_account"
@@ -499,8 +491,7 @@ class MexcRequestDataSpot(MexcRequestData):
             }
 
             return [account_info], status
-        else:
-            return [], status
+        else: return [], status
 
     def _get_my_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -529,30 +520,34 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             trades = [MexcRequestTradeData(trade, symbol_name, asset_type) for trade in input_data]
             return [trades], status
-        else:
-            return [], status
+        else: return [], status
 
     def get_server_time(self, extra_data=None, **kwargs):
+        """get_server_time method"""
         path, params, extra_data = self._get_server_time(extra_data=extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data, is_sign=False)
 
     def get_tick(self, symbol, extra_data=None, **kwargs):
+        """get_tick method"""
         path, params, extra_data = self._get_ticker(symbol, extra_data=extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data, is_sign=False)
 
     def get_depth(self, symbol, count=20, extra_data=None, **kwargs):
+        """get_depth method"""
         path, params, extra_data = self._get_order_book(
             symbol, limit=count, extra_data=extra_data, **kwargs
         )
         return self.request(path, params=params, extra_data=extra_data, is_sign=False)
 
     def get_kline(self, symbol, period="1h", count=20, extra_data=None, **kwargs):
+        """get_kline method"""
         path, params, extra_data = self._get_klines(
             symbol, interval=period, limit=count, extra_data=extra_data, **kwargs
         )
         return self.request(path, params=params, extra_data=extra_data, is_sign=False)
 
     def async_get_tick(self, symbol, extra_data=None, **kwargs):
+        """async_get_tick method"""
         path, params, extra_data = self._get_ticker(symbol, extra_data=extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data, is_sign=False),
@@ -560,6 +555,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_depth(self, symbol, count=20, extra_data=None, **kwargs):
+        """async_get_depth method"""
         path, params, extra_data = self._get_order_book(
             symbol, limit=count, extra_data=extra_data, **kwargs
         )
@@ -569,6 +565,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_kline(self, symbol, period="1h", count=20, extra_data=None, **kwargs):
+        """async_get_kline method"""
         path, params, extra_data = self._get_klines(
             symbol, interval=period, limit=count, extra_data=extra_data, **kwargs
         )
@@ -578,6 +575,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def get_exchange_info(self, symbol=None, extra_data=None, **kwargs):
+        """get_exchange_info method"""
         path, params, extra_data = self._get_exchange_info(
             symbol=symbol, extra_data=extra_data, **kwargs
         )
@@ -595,6 +593,7 @@ class MexcRequestDataSpot(MexcRequestData):
         extra_data=None,
         **kwargs,
     ):
+        """make_order method"""
         path, params, extra_data = self._make_order(
             symbol=symbol,
             vol=volume,
@@ -609,6 +608,7 @@ class MexcRequestDataSpot(MexcRequestData):
         return self.request(path, params=params, extra_data=extra_data, is_sign=True)
 
     def cancel_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
+        """cancel_order method"""
         path, params, extra_data = self._cancel_order(
             symbol=symbol,
             order_id=order_id,
@@ -619,6 +619,7 @@ class MexcRequestDataSpot(MexcRequestData):
         return self.request(path, params=params, extra_data=extra_data, is_sign=True)
 
     def query_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
+        """query_order method"""
         path, params, extra_data = self._get_order(
             symbol=symbol,
             order_id=order_id,
@@ -629,19 +630,23 @@ class MexcRequestDataSpot(MexcRequestData):
         return self.request(path, params=params, extra_data=extra_data, is_sign=True)
 
     def get_open_orders(self, symbol=None, extra_data=None, **kwargs):
+        """get_open_orders method"""
         path, params, extra_data = self._get_open_orders(
             symbol=symbol, extra_data=extra_data, **kwargs
         )
         return self.request(path, params=params, extra_data=extra_data, is_sign=True)
 
     def get_account(self, symbol="ALL", extra_data=None, **kwargs):
+        """get_account method"""
         path, params, extra_data = self._get_account(extra_data=extra_data, **kwargs)
         return self.request(path, params=params, extra_data=extra_data, is_sign=True)
 
     def get_balance(self, symbol=None, extra_data=None, **kwargs):
+        """get_balance method"""
         return self.get_account(extra_data=extra_data, **kwargs)
 
     def async_get_server_time(self, extra_data=None, **kwargs):
+        """async_get_server_time method"""
         path, params, extra_data = self._get_server_time(extra_data=extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data, is_sign=False),
@@ -649,6 +654,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_exchange_info(self, symbol=None, extra_data=None, **kwargs):
+        """async_get_exchange_info method"""
         path, params, extra_data = self._get_exchange_info(
             symbol=symbol, extra_data=extra_data, **kwargs
         )
@@ -669,6 +675,7 @@ class MexcRequestDataSpot(MexcRequestData):
         extra_data=None,
         **kwargs,
     ):
+        """async_make_order method"""
         path, params, extra_data = self._make_order(
             symbol=symbol,
             vol=volume,
@@ -688,6 +695,7 @@ class MexcRequestDataSpot(MexcRequestData):
     def async_cancel_order(
         self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs
     ):
+        """async_cancel_order method"""
         path, params, extra_data = self._cancel_order(
             symbol=symbol,
             order_id=order_id,
@@ -703,6 +711,7 @@ class MexcRequestDataSpot(MexcRequestData):
     def async_query_order(
         self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs
     ):
+        """async_query_order method"""
         path, params, extra_data = self._get_order(
             symbol=symbol,
             order_id=order_id,
@@ -716,6 +725,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_open_orders(self, symbol=None, extra_data=None, **kwargs):
+        """async_get_open_orders method"""
         path, params, extra_data = self._get_open_orders(
             symbol=symbol, extra_data=extra_data, **kwargs
         )
@@ -725,6 +735,7 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_account(self, symbol="ALL", extra_data=None, **kwargs):
+        """async_get_account method"""
         path, params, extra_data = self._get_account(extra_data=extra_data, **kwargs)
         self.submit(
             self.async_request(path, params=params, extra_data=extra_data, is_sign=True),
@@ -732,4 +743,5 @@ class MexcRequestDataSpot(MexcRequestData):
         )
 
     def async_get_balance(self, symbol=None, extra_data=None, **kwargs):
+        """async_get_balance method"""
         self.async_get_account(extra_data=extra_data, **kwargs)

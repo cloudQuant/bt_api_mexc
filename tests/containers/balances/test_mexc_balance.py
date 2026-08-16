@@ -59,6 +59,7 @@ class TestMexcBalanceData:
         assert "MEXC" in result
 
     def test_init_data_from_json_string(self):
+        """test_init_data_from_json_string method"""
         payload = '{"asset": "BTC", "free": "1.5", "locked": "0.5"}'
         balance = MexcBalanceData(payload, symbol_name="BTC", asset_type="SPOT")
         balance.init_data()
@@ -67,6 +68,7 @@ class TestMexcBalanceData:
         assert balance.get_total() == 2.0
 
     def test_balance_helper_methods(self):
+        """test_balance_helper_methods method"""
         balance = MexcBalanceData(
             {"asset": "ETH", "free": "2.0", "locked": "1.0"},
             symbol_name="ETH",
@@ -82,7 +84,9 @@ class TestMexcBalanceData:
 
 
 class TestMexcRequestBalanceData:
+    """Class TestMexcRequestBalanceData"""
     def test_request_balance_init_data(self):
+        """test_request_balance_init_data method"""
         balance = MexcRequestBalanceData(
             {"asset": "USDT", "free": "5.0", "locked": "0.5"},
             symbol_name="USDT",
@@ -96,7 +100,9 @@ class TestMexcRequestBalanceData:
 
 
 class TestMexcAccountData:
+    """Class TestMexcAccountData"""
     def test_account_data_parsing_and_balance_lookup(self):
+        """test_account_data_parsing_and_balance_lookup method"""
         account = MexcAccountData(
             {
                 "makerCommission": "10",

@@ -10,7 +10,9 @@ from bt_api_base.functions.utils import from_dict_get_float, from_dict_get_int, 
 
 
 class MexcOrderData(OrderData):
+    """Class MexcOrderData"""
     def __init__(self, order_info, symbol_name, asset_type, has_been_json_encoded=False):
+        """__init__ method"""
         super().__init__(order_info, has_been_json_encoded)
         self.exchange_name = "MEXC"
         self.local_update_time = time.time()
@@ -36,6 +38,7 @@ class MexcOrderData(OrderData):
         self.has_been_init_data = False
 
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.order_info, str):
                 self.order_data = json.loads(self.order_info)
@@ -65,6 +68,7 @@ class MexcOrderData(OrderData):
         return self
 
     def get_all_data(self):
+        """get_all_data method"""
         if self.all_data is None:
             self.init_data()
             self.all_data = {
@@ -98,107 +102,132 @@ class MexcOrderData(OrderData):
         return self.__str__()
 
     def get_exchange_name(self):
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_local_update_time(self):
+        """get_local_update_time method"""
         return self.local_update_time
 
     def get_symbol_name(self):
+        """get_symbol_name method"""
         return self.symbol_name
 
     def get_asset_type(self):
+        """get_asset_type method"""
         return self.asset_type
 
     def get_order_id(self):
+        """get_order_id method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.order_id
 
     def get_client_order_id(self):
+        """get_client_order_id method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.client_order_id
 
     def get_status(self):
+        """get_status method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.status
 
     def get_side(self):
+        """get_side method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.side
 
     def get_type(self):
+        """get_type method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.type
 
     def get_time_in_force(self):
+        """get_time_in_force method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.time_in_force
 
     def get_quantity(self):
+        """get_quantity method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.quantity
 
     def get_executed_qty(self):
+        """get_executed_qty method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.executed_qty
 
     def get_price(self):
+        """get_price method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.price
 
     def get_cummulative_quote_qty(self):
+        """get_cummulative_quote_qty method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.cummulative_quote_qty
 
     def get_time(self):
+        """get_time method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.time
 
     def get_update_time(self):
+        """get_update_time method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.update_time
 
     def get_is_working(self):
+        """get_is_working method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.is_working
 
     def get_stop_price(self):
+        """get_stop_price method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.stop_price
 
     def is_open(self):
+        """is_open method"""
         return self.status in ["NEW", "PARTIALLY_FILLED"]
 
     def is_closed(self):
+        """is_closed method"""
         return self.status in ["FILLED", "CANCELED", "EXPIRED", "REJECTED"]
 
     def is_filled(self):
+        """is_filled method"""
         return self.status == "FILLED"
 
     def is_canceled(self):
+        """is_canceled method"""
         return self.status == "CANCELED"
 
     def get_filled_percentage(self):
+        """get_filled_percentage method"""
         if self.quantity and self.quantity > 0:
             return (self.executed_qty / self.quantity) * 100
         return 0.0
 
 
 class MexcWssOrderData(MexcOrderData):
+    """Class MexcWssOrderData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             self.order_data = json.loads(self.order_info)
             self.has_been_json_encoded = True
@@ -220,7 +249,9 @@ class MexcWssOrderData(MexcOrderData):
 
 
 class MexcRequestOrderData(MexcOrderData):
+    """Class MexcRequestOrderData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.order_info, str):
                 self.order_data = json.loads(self.order_info)

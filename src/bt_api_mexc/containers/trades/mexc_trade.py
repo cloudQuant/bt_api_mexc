@@ -10,7 +10,9 @@ from bt_api_base.functions.utils import from_dict_get_float, from_dict_get_int, 
 
 
 class MexcTradeData(TradeData):
+    """Class MexcTradeData"""
     def __init__(self, trade_info, symbol_name, asset_type, has_been_json_encoded=False):
+        """__init__ method"""
         super().__init__(trade_info, has_been_json_encoded)
         self.exchange_name = "MEXC"
         self.local_update_time = time.time()
@@ -32,6 +34,7 @@ class MexcTradeData(TradeData):
         self.has_been_init_data = False
 
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.trade_info, str):
                 self.trade_data = json.loads(self.trade_info)
@@ -54,6 +57,7 @@ class MexcTradeData(TradeData):
         self.has_been_init_data = True
 
     def get_all_data(self):
+        """get_all_data method"""
         if self.all_data is None:
             self.init_data()
             self.all_data = {
@@ -83,35 +87,46 @@ class MexcTradeData(TradeData):
         return self.__str__()
 
     def get_exchange_name(self):
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_local_update_time(self):
+        """get_local_update_time method"""
         return self.local_update_time
 
     def get_symbol_name(self):
+        """get_symbol_name method"""
         return self.symbol_name
 
     def get_asset_type(self):
+        """get_asset_type method"""
         return self.asset_type
 
     def get_trade_id(self):
+        """get_trade_id method"""
         return self.trade_id
 
     def get_price(self):
+        """get_price method"""
         return self.price
 
     def get_quantity(self):
+        """get_quantity method"""
         return self.quantity
 
     def get_time(self):
+        """get_time method"""
         return self.time
 
     def get_side(self):
+        """get_side method"""
         return "BUY" if self.is_buyer else "SELL"
 
 
 class MexcWssTradeData(MexcTradeData):
+    """Class MexcWssTradeData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             self.trade_data = json.loads(self.trade_info)
             self.has_been_json_encoded = True
@@ -128,7 +143,9 @@ class MexcWssTradeData(MexcTradeData):
 
 
 class MexcRequestTradeData(MexcTradeData):
+    """Class MexcRequestTradeData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.trade_info, str):
                 self.trade_data = json.loads(self.trade_info)

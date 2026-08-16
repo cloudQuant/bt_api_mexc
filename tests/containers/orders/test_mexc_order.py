@@ -46,6 +46,7 @@ class TestMexcOrderData:
         assert order.price == 50000.0
 
     def test_init_data_parses_fields_and_helpers(self):
+        """test_init_data_parses_fields_and_helpers method"""
         data = {
             "orderId": "123456",
             "clientOrderId": "abc123",
@@ -107,6 +108,7 @@ class TestMexcOrderData:
         assert "MEXC" in result
 
     def test_request_and_wss_subclasses_parse_payloads(self):
+        """test_request_and_wss_subclasses_parse_payloads method"""
         request = MexcRequestOrderData(
             json.dumps(
                 {

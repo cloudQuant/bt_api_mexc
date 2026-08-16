@@ -1,3 +1,4 @@
+"""Module-level docstring."""
 try:
     from bt_api_base.plugins.protocol import PluginInfo, PluginMetadata, PluginVersion
 except ImportError:

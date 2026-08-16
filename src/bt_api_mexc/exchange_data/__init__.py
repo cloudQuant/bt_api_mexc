@@ -11,6 +11,7 @@ class MexcExchangeData(ExchangeData):
     """Base class for all MEXC exchange types."""
 
     def __init__(self) -> None:
+        """__init__ method"""
         super().__init__()
         self.exchange_name = "mexc"
         self.rest_url = ""
@@ -48,9 +49,11 @@ class MexcExchangeData(ExchangeData):
 
     # noinspection PyMethodMayBeStatic
     def get_symbol(self, symbol: str) -> str:
+        """get_symbol method"""
         return symbol.replace("-", "").replace("/", "")
 
     def account_wss_symbol(self, symbol: str) -> str:
+        """account_wss_symbol method"""
         for lc in self.legal_currency:
             if lc in symbol:
                 symbol = f"{symbol.split(lc)[0]}/{lc}".lower()
@@ -59,11 +62,13 @@ class MexcExchangeData(ExchangeData):
 
     # noinspection PyMethodMayBeStatic
     def get_period(self, key: str) -> str:
+        """get_period method"""
         if key in self.kline_periods:
             return self.kline_periods[key]
         return key
 
     def get_rest_path(self, key: str, **kwargs: Any) -> str:
+        """get_rest_path method"""
         if key not in self.rest_paths or self.rest_paths[key] == "":
             raise ValueError(f"REST path not found for key: {key} on exchange {self.exchange_name}")
         return str(self.rest_paths[key])
@@ -100,6 +105,7 @@ class MexcExchangeDataSpot(MexcExchangeData):
     """MEXC Spot Trading Data Configuration."""
 
     def __init__(self) -> None:
+        """__init__ method"""
         super().__init__()
         self.asset_type = "SPOT"
         self.exchange_name = "MEXC___SPOT"
@@ -220,6 +226,7 @@ class MexcExchangeDataSwap(MexcExchangeData):
     """MEXC USDT-M Futures (swap) Data Configuration."""
 
     def __init__(self) -> None:
+        """__init__ method"""
         super().__init__()
         self.exchange_name = "MEXC___SWAP"
         self.asset_type = "SWAP"

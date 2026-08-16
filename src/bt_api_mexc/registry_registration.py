@@ -15,6 +15,7 @@ from bt_api_mexc.feeds.live_mexc import MexcRequestDataSpot
 
 
 def register_mexc():
+    """register_mexc function"""
     if ExchangeRegistry is None:
         return
     ExchangeRegistry.register_feed("MEXC___SPOT", MexcRequestDataSpot)

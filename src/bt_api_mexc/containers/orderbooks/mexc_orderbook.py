@@ -9,7 +9,9 @@ from bt_api_base.containers.orderbooks.orderbook import OrderBookData
 
 
 class MexcOrderBookData(OrderBookData):
+    """Class MexcOrderBookData"""
     def __init__(self, orderbook_info, symbol_name, asset_type, has_been_json_encoded=False):
+        """__init__ method"""
         super().__init__(orderbook_info, has_been_json_encoded)
         self.exchange_name = "MEXC"
         self.local_update_time = time.time()
@@ -23,6 +25,7 @@ class MexcOrderBookData(OrderBookData):
         self.has_been_init_data = False
 
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.order_book_info, str):
                 self.orderbook_data = json.loads(self.order_book_info)
@@ -50,6 +53,7 @@ class MexcOrderBookData(OrderBookData):
         return self
 
     def get_all_data(self):
+        """get_all_data method"""
         if self.all_data is None:
             self.init_data()
             self.all_data = {
@@ -71,45 +75,56 @@ class MexcOrderBookData(OrderBookData):
         return self.__str__()
 
     def get_exchange_name(self):
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_local_update_time(self):
+        """get_local_update_time method"""
         return self.local_update_time
 
     def get_symbol_name(self):
+        """get_symbol_name method"""
         return self.symbol_name
 
     def get_asset_type(self):
+        """get_asset_type method"""
         return self.asset_type
 
     def get_timestamp(self):
+        """get_timestamp method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.timestamp
 
     def get_bids(self):
+        """get_bids method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.bids
 
     def get_asks(self):
+        """get_asks method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.asks
 
     def get_best_bid(self):
+        """get_best_bid method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.bids[0][0] if self.bids else None
 
     def get_best_ask(self):
+        """get_best_ask method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.asks[0][0] if self.asks else None
 
 
 class MexcWssOrderBookData(MexcOrderBookData):
+    """Class MexcWssOrderBookData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             self.orderbook_data = json.loads(self.order_book_info)
             self.has_been_json_encoded = True
@@ -122,7 +137,9 @@ class MexcWssOrderBookData(MexcOrderBookData):
 
 
 class MexcRequestOrderBookData(MexcOrderBookData):
+    """Class MexcRequestOrderBookData"""
     def init_data(self):
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.order_book_info, str):
                 self.orderbook_data = json.loads(self.order_book_info)

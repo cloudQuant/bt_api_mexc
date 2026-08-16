@@ -11,6 +11,7 @@ from bt_api_base.functions.utils import from_dict_get_float, from_dict_get_strin
 
 
 class MexcBalanceData(BalanceData):
+    """Class MexcBalanceData"""
     def __init__(
         self,
         balance_info: dict[str, Any] | str,
@@ -18,6 +19,7 @@ class MexcBalanceData(BalanceData):
         asset_type: str | None = None,
         has_been_json_encoded: bool = False,
     ) -> None:
+        """__init__ method"""
         super().__init__(balance_info, has_been_json_encoded)
         self.exchange_name = "MEXC"
         self.local_update_time = time.time()
@@ -33,6 +35,7 @@ class MexcBalanceData(BalanceData):
         self.has_been_init_data = False
 
     def init_data(self) -> MexcBalanceData:
+        """init_data method"""
         if not self.has_been_json_encoded:
             if isinstance(self.balance_info, str):
                 self.balance_data = json.loads(self.balance_info)
@@ -48,6 +51,7 @@ class MexcBalanceData(BalanceData):
         return self
 
     def get_all_data(self) -> dict[str, Any]:
+        """get_all_data method"""
         if self.all_data is None:
             self.init_data()
             self.all_data = {
@@ -70,33 +74,41 @@ class MexcBalanceData(BalanceData):
         return self.__str__()
 
     def get_exchange_name(self) -> str:
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_local_update_time(self) -> float:
+        """get_local_update_time method"""
         return self.local_update_time
 
     def get_symbol_name(self) -> str | None:
+        """get_symbol_name method"""
         return self.symbol_name
 
     def get_asset_type(self) -> str:
+        """get_asset_type method"""
         return self.asset_type if self.asset_type is not None else ""
 
     def get_asset(self) -> str | None:
+        """get_asset method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.asset
 
     def get_free(self) -> float | None:
+        """get_free method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.free
 
     def get_locked(self) -> float | None:
+        """get_locked method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.locked
 
     def get_total(self) -> float:
+        """get_total method"""
         if not self.has_been_init_data:
             self.init_data()
         if self.free is not None and self.locked is not None:
@@ -104,26 +116,32 @@ class MexcBalanceData(BalanceData):
         return 0.0
 
     def get_available(self) -> float:
+        """get_available method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.free if self.free is not None else 0.0
 
     def get_frozen(self) -> float:
+        """get_frozen method"""
         if not self.has_been_init_data:
             self.init_data()
         return self.locked if self.locked is not None else 0.0
 
     def is_zero(self) -> bool:
+        """is_zero method"""
         return self.get_total() == 0.0
 
     def has_available(self) -> bool:
+        """has_available method"""
         return self.get_available() > 0.0
 
     def has_frozen(self) -> bool:
+        """has_frozen method"""
         return self.get_frozen() > 0.0
 
 
 class MexcRequestBalanceData(MexcBalanceData):
+    """Class MexcRequestBalanceData"""
     def __init__(
         self,
         balance_info: dict[str, Any] | str,
@@ -131,20 +149,24 @@ class MexcRequestBalanceData(MexcBalanceData):
         asset_type: str | None = None,
         has_been_json_encoded: bool = False,
     ) -> None:
+        """__init__ method"""
         super().__init__(balance_info, symbol_name, asset_type, has_been_json_encoded)
 
     def init_data(self) -> MexcRequestBalanceData:
+        """init_data method"""
         super().init_data()
         return self
 
 
 class MexcAccountData(BalanceData):
+    """Class MexcAccountData"""
     def __init__(
         self,
         account_info: dict[str, Any] | str,
         asset_type: str,
         has_been_json_encoded: bool = False,
     ) -> None:
+        """__init__ method"""
         super().__init__(account_info, has_been_json_encoded)
         self.exchange_name = "MEXC"
         self.local_update_time = time.time()
@@ -165,6 +187,7 @@ class MexcAccountData(BalanceData):
         self.has_been_init_data = False
 
     def init_data(self) -> MexcAccountData:
+        """init_data method"""
         if self.has_been_init_data:
             return self
 
@@ -210,6 +233,7 @@ class MexcAccountData(BalanceData):
         return self
 
     def get_all_data(self) -> dict[str, Any]:
+        """get_all_data method"""
         if self.all_data is None:
             self.init_data()
             self.all_data = {
@@ -229,19 +253,24 @@ class MexcAccountData(BalanceData):
         return self.all_data
 
     def get_exchange_name(self) -> str:
+        """get_exchange_name method"""
         return self.exchange_name
 
     def get_asset_type(self) -> str:
+        """get_asset_type method"""
         return self.asset_type
 
     def get_local_update_time(self) -> float:
+        """get_local_update_time method"""
         return self.local_update_time
 
     def get_balances(self) -> list[MexcBalanceData]:
+        """get_balances method"""
         self.init_data()
         return self.balances
 
     def get_balance_by_asset(self, asset: str) -> MexcBalanceData | None:
+        """get_balance_by_asset method"""
         self.init_data()
         for balance in self.balances:
             if balance.get_asset() == asset:
@@ -249,45 +278,56 @@ class MexcAccountData(BalanceData):
         return None
 
     def get_total_balance_by_asset(self, asset: str) -> float:
+        """get_total_balance_by_asset method"""
         balance = self.get_balance_by_asset(asset)
         return balance.get_total() if balance else 0.0
 
     def get_maker_commission(self) -> int | None:
+        """get_maker_commission method"""
         self.init_data()
         return self.maker_commission
 
     def get_taker_commission(self) -> int | None:
+        """get_taker_commission method"""
         self.init_data()
         return self.taker_commission
 
     def get_buyer_commission(self) -> int | None:
+        """get_buyer_commission method"""
         self.init_data()
         return self.buyer_commission
 
     def get_seller_commission(self) -> int | None:
+        """get_seller_commission method"""
         self.init_data()
         return self.seller_commission
 
     def get_can_trade(self) -> bool | None:
+        """get_can_trade method"""
         self.init_data()
         return self.can_trade
 
     def get_can_withdraw(self) -> bool | None:
+        """get_can_withdraw method"""
         self.init_data()
         return self.can_withdraw
 
     def get_can_deposit(self) -> bool | None:
+        """get_can_deposit method"""
         self.init_data()
         return self.can_deposit
 
     def get_account_type(self) -> str | None:
+        """get_account_type method"""
         self.init_data()
         return self.account_type
 
     def get_available_balance_by_asset(self, asset: str) -> float:
+        """get_available_balance_by_asset method"""
         balance = self.get_balance_by_asset(asset)
         return balance.get_available() if balance else 0.0
 
     def get_frozen_balance_by_asset(self, asset: str) -> float:
+        """get_frozen_balance_by_asset method"""
         balance = self.get_balance_by_asset(asset)
         return balance.get_frozen() if balance else 0.0

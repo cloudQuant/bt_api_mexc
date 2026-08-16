@@ -40,6 +40,7 @@ class TestMexcTickerData:
         assert ticker.last_price == 50000.0
 
     def test_init_data_parses_fields_and_getters(self):
+        """test_init_data_parses_fields_and_getters method"""
         data = {
             "symbol": "BTCUSDT",
             "serverTime": 1700000000000,
@@ -83,6 +84,7 @@ class TestMexcTickerData:
         assert "MEXC" in result
 
     def test_request_and_wss_subclasses_parse_payloads(self):
+        """test_request_and_wss_subclasses_parse_payloads method"""
         request = MexcRequestTickerData(
             json.dumps(
                 {
