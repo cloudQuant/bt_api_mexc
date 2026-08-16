@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from bt_api_mexc.containers.trades.mexc_trade import (
+    MexcRequestTradeData,
     MexcTradeData,
     MexcWssTradeData,
-    MexcRequestTradeData,
 )
 
 __all__ = [

@@ -1,7 +1,9 @@
 """Module-level docstring."""
 from unittest.mock import AsyncMock, MagicMock
+
 import pytest
 from bt_api_base.containers.requestdatas.request_data import RequestData
+
 from bt_api_mexc.feeds.live_mexc.request_base import MexcRequestData
 
 
@@ -23,6 +25,7 @@ def test_mexc_disconnect_closes_http_client() -> None:
     request_data._http_client.close.assert_called_once_with()
 
 
+@pytest.mark.asyncio
 async def test_mexc_async_request_allows_missing_extra_data(monkeypatch) -> None:
     """test_mexc_async_request_allows_missing_extra_data function"""
     request_data = MexcRequestData(
