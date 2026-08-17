@@ -81,3 +81,6 @@ markers = [
     "unit: Unit tests (fast, no external dependencies)",
     "integration: Integration tests (may require external services)",
 ]
+
+[project.entry-points."bt_api.plugins"]
+mexc = "bt_api_mexc.plugin:register_plugin"

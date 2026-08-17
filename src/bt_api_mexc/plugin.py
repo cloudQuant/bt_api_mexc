@@ -1,34 +1,27 @@
 """Module-level docstring."""
-try:
-    from bt_api_base.plugins.protocol import PluginInfo, PluginMetadata, PluginVersion
-except ImportError:
-    PluginInfo = None  # type: ignore
-    PluginMetadata = None  # type: ignore
-    PluginVersion = None  # type: ignore
+# generated, verify register call
 
-from bt_api_mexc.exchange_data import MexcExchangeDataSpot
-from bt_api_mexc.feeds.live_mexc import MexcRequestDataSpot
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
+from bt_api_base.plugins.protocol import PluginInfo
+
+from bt_api_mexc.registry_registration import register_mexc
+from bt_api_mexc import __version__
+
+if TYPE_CHECKING:
+    from bt_api_base.registry import ExchangeRegistry
 
 
-def _get_mexc_metadata():
-    if PluginMetadata is None:
-        return None
-    return PluginMetadata(
-        name="MEXC Exchange Plugin",
-        version=PluginVersion(major=0, minor=1, patch=0),
-        description="MEXC Spot trading support for bt_api_py",
-        supported_exchanges=["MEXC___SPOT"],
-        dependencies=["bt_api_base>=0.15,<1.0"],
+def register_plugin(registry: ExchangeRegistry, runtime_factory: Any) -> PluginInfo:
+    """register_plugin function"""
+    register_mexc()
+
+    return PluginInfo(
+        name="bt_api_mexc",
+        version=__version__,
+        core_requires=">=0.15,<1.0",
+        supported_exchanges=("MEXC___SPOT",),
+        supported_asset_types=("SPOT",),
     )
-
-
-MEXC_PLUGIN_INFO = (
-    PluginInfo(
-        name="mexc",
-        metadata=_get_mexc_metadata(),
-        feed_class=MexcRequestDataSpot,
-        exchange_data_class=MexcExchangeDataSpot,
-    )
-    if PluginInfo is not None
-    else None
-)
