@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING, Any
 
 from bt_api_base.plugins.protocol import PluginInfo
 
-from bt_api_mexc.registry_registration import register_mexc
 from bt_api_mexc import __version__
+from bt_api_mexc.registry_registration import register_mexc
 
 if TYPE_CHECKING:
     from bt_api_base.registry import ExchangeRegistry

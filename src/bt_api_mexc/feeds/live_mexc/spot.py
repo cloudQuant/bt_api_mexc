@@ -164,7 +164,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status:
             ticker = MexcRequestTickerData(input_data, symbol_name, asset_type)
             return [ticker], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_order_book(self, symbol, limit=100, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -193,7 +194,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status:
             orderbook = MexcRequestOrderBookData(input_data, symbol_name, asset_type)
             return [orderbook], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_recent_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -222,7 +224,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             trades = [MexcRequestTradeData(trade, symbol_name, asset_type) for trade in input_data]
             return [trades], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_klines(self, symbol, interval="1h", limit=100, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -271,7 +274,8 @@ class MexcRequestDataSpot(MexcRequestData):
                     }
                     bars.append(bar)
             return [bars], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_server_time(self, extra_data=None, **kwargs):
         request_type = "get_server_time"
@@ -295,7 +299,8 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [{"server_time": input_data.get("serverTime")}], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_exchange_info(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_exchange_info"
@@ -323,7 +328,8 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [{"exchange_info": input_data}], status
-        else: return [], status
+        else:
+            return [], status
 
     def _cancel_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -356,7 +362,8 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [MexcRequestOrderData(input_data, symbol_name, asset_type)], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -389,7 +396,8 @@ class MexcRequestDataSpot(MexcRequestData):
 
         if status:
             return [MexcRequestOrderData(input_data, symbol_name, asset_type)], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_open_orders(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_open_orders"
@@ -420,7 +428,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             orders = [MexcRequestOrderData(order, symbol_name, asset_type) for order in input_data]
             return [orders], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_all_orders(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -449,7 +458,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             orders = [MexcRequestOrderData(order, symbol_name, asset_type) for order in input_data]
             return [orders], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_account(self, extra_data=None, **kwargs):
         request_type = "get_account"
@@ -491,7 +501,8 @@ class MexcRequestDataSpot(MexcRequestData):
             }
 
             return [account_info], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_my_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_symbol = self._params.get_symbol(symbol)
@@ -520,7 +531,8 @@ class MexcRequestDataSpot(MexcRequestData):
         if status and isinstance(input_data, list):
             trades = [MexcRequestTradeData(trade, symbol_name, asset_type) for trade in input_data]
             return [trades], status
-        else: return [], status
+        else:
+            return [], status
 
     def get_server_time(self, extra_data=None, **kwargs):
         """get_server_time method"""

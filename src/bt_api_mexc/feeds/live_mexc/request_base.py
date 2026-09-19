@@ -276,7 +276,8 @@ class MexcRequestData(Feed):
                     "local_update_time": time.time(),
                 }
             ], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_recent_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_type = "get_recent_trades"
@@ -421,7 +422,8 @@ class MexcRequestData(Feed):
                     }
                 )
             return [{"tickers": tickers}], status
-        else: return [], status
+        else:
+            return [], status
 
     def _make_order(
         self,
@@ -473,7 +475,8 @@ class MexcRequestData(Feed):
                     "cummulative_quote_qty": input_data.get("cummulativeQuoteQty", "0"),
                 }
             ], status
-        else: return [], status
+        else:
+            return [], status
 
     def _cancel_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_type = "cancel_order"
@@ -508,7 +511,8 @@ class MexcRequestData(Feed):
                     "transact_time": input_data.get("transactTime"),
                 }
             ], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_order(self, symbol, order_id=None, client_order_id=None, extra_data=None, **kwargs):
         request_type = "get_order"
@@ -555,7 +559,8 @@ class MexcRequestData(Feed):
                     "exchange": input_data.get("exchange"),
                 }
             ], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_open_orders(self, symbol=None, extra_data=None, **kwargs):
         request_type = "get_open_orders"
@@ -688,7 +693,8 @@ class MexcRequestData(Feed):
                     "account_type": input_data.get("accountType"),
                 }
             ], status
-        else: return [], status
+        else:
+            return [], status
 
     def _get_my_trades(self, symbol, limit=500, extra_data=None, **kwargs):
         request_type = "get_my_trades"
