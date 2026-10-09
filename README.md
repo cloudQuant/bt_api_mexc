@@ -1,4 +1,4 @@
-# MEXC
+﻿# MEXC
 
 Exchange plugin for bt_api framework.
 

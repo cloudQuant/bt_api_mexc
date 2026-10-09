@@ -1,4 +1,4 @@
-# MEXC Documentation
+﻿# MEXC Documentation
 
 ## English
 
