@@ -1,27 +1,20 @@
-"""MEXC exchange auto-registration."""
+"""MEXC exchange registration on an explicitly supplied registry."""
 
-try:
-    from bt_api_base.balance_utils import simple_balance_handler as _mexc_balance_handler
-except ImportError:
-    _mexc_balance_handler = None
+from __future__ import annotations
 
-try:
-    from bt_api_base.registry import ExchangeRegistry
-except ImportError:
-    ExchangeRegistry = None  # type: ignore
+from typing import TYPE_CHECKING
+
+from bt_api_base.balance_utils import simple_balance_handler as _mexc_balance_handler
 
 from bt_api_mexc.exchange_data import MexcExchangeDataSpot
 from bt_api_mexc.feeds.live_mexc import MexcRequestDataSpot
 
-
-def register_mexc():
-    """register_mexc function"""
-    if ExchangeRegistry is None:
-        return
-    ExchangeRegistry.register_feed("MEXC___SPOT", MexcRequestDataSpot)
-    ExchangeRegistry.register_exchange_data("MEXC___SPOT", MexcExchangeDataSpot)
-    if _mexc_balance_handler is not None:
-        ExchangeRegistry.register_balance_handler("MEXC___SPOT", _mexc_balance_handler)
+if TYPE_CHECKING:
+    from bt_api_base.registry import ExchangeRegistry
 
 
-register_mexc()
+def register_mexc(registry: ExchangeRegistry) -> None:
+    """Register MEXC Spot on the loader's isolated registry."""
+    registry.register_feed("MEXC___SPOT", MexcRequestDataSpot)
+    registry.register_exchange_data("MEXC___SPOT", MexcExchangeDataSpot)
+    registry.register_balance_handler("MEXC___SPOT", _mexc_balance_handler)

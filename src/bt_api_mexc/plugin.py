@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from bt_api_base.plugins.protocol import PluginInfo
 
@@ -14,9 +14,9 @@ if TYPE_CHECKING:
     from bt_api_base.registry import ExchangeRegistry
 
 
-def register_plugin(registry: ExchangeRegistry, runtime_factory: Any) -> PluginInfo:
+def register_plugin(registry: ExchangeRegistry) -> PluginInfo:
     """register_plugin function"""
-    register_mexc()
+    register_mexc(registry)
 
     return PluginInfo(
         name="bt_api_mexc",
